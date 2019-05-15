@@ -38,7 +38,7 @@ class JobbtittelIndexerServiceTest {
 
     companion object {
         fun mappingBuilder(): MappingBuilder {
-            return WireMock.post(urlPathMatching("/pam-ontologi-synonymer/rest/typeahead/stilling/alle"))
+            return WireMock.get(urlPathMatching("/pam-ontologi-synonymer/rest/typeahead/stilling/alle"))
                     .willReturn(WireMock.aResponse().withStatus(200)
                             .withHeader("Content-Type", "application/json")
                             .withBody(WiremockResponse.stillingstittelResponse))

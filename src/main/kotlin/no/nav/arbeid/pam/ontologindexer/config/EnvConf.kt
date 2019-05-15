@@ -9,4 +9,6 @@ class EnvConf {
     @Value("\${ontologi.url:http://localhost:8189/ontologi/}")
     val ontologiUrl: String? = null
 
+    val stillingtittelEsPrefix: String? = null
+
 }

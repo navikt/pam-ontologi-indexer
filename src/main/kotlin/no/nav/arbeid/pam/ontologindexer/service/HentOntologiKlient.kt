@@ -26,9 +26,9 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
                 .build()
     }
 
-    fun hentTitler(): List<Stillingstitler> {
+    fun hentTitler(): List<Stillingstittel> {
         LOG.info("Hent ontologi med url/data request: $stillingstitlerUrl")
-        val response = restTemplate.exchange(stillingstitlerUrl, HttpMethod.GET, null, object: ParameterizedTypeReference<List<Stillingstitler>>(){}).body
+        val response = restTemplate.exchange(stillingstitlerUrl, HttpMethod.GET, null, object: ParameterizedTypeReference<List<Stillingstittel>>(){}).body
         LOG.info("response: $response")
         return response ?: throw RuntimeException("Tomt resultat fra hent ontologi kall")
     }
@@ -38,7 +38,7 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
     }
 }
 
-data class Stillingstitler (
+data class Stillingstittel (
         val konseptId: Int = 0,
         val label: String = "",
         val styrk08: String = ""
