@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class IndexService {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexService.class);
-    private static final String CLASSPATH_SETTINGS = "/ESUnderenheterSetting.json";
+    private static final String CLASSPATH_SETTINGS = "/ESStillingstitlerSetting.json";
     private static final int INDEX_EXPIRATION_IN_DAYS = 10;
 
     private final ElasticsearchIndexClient client;
@@ -123,7 +123,7 @@ public class IndexService {
     private boolean indexIsBefore(String index, String prefix, LocalDate date) {
 
         try {
-            return Datestamp.parseFrom(StringUtils.remove(index, prefix)).isBefore(date);
+            return Datestamp.INSTANCE.parseFrom(StringUtils.remove(index, prefix)).isBefore(date);
         } catch (DateTimeParseException e) {
             LOG.error("Couldn't parse date from index name {}", index);
             return false;

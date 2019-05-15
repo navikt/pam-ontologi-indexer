@@ -37,7 +37,7 @@ import java.util.List;
 public class ElasticsearchIndexClient extends RestHighLevelClient {
 
     private final static Logger LOG = LoggerFactory.getLogger(ElasticsearchIndexClient.class);
-    private final static String UNDERENHET_TYPE = "underenhet";
+    private final static String STILLINGSTITTEL_TYPE = "stillingstittel";
 
     private final ObjectMapper objectMapper;
 
@@ -106,7 +106,7 @@ public class ElasticsearchIndexClient extends RestHighLevelClient {
         BulkRequest request = new BulkRequest();
 
         for (Stillingstittel content : contents) {
-            request.add(new IndexRequest(lowerCaseIndex, UNDERENHET_TYPE, String.valueOf(content.getKonseptId()))
+            request.add(new IndexRequest(lowerCaseIndex, STILLINGSTITTEL_TYPE, String.valueOf(content.getKonseptId()))
                     .source(objectMapper.writeValueAsString(content), XContentType.JSON));
         }
         return bulk(request);

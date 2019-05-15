@@ -22,13 +22,13 @@ class JobbtittelIndexerService {
     @Autowired
     lateinit var envConf:EnvConf
 
-    fun indekser(stillingstitler: List<Stillingstittel>) {
+    fun indekser() {
         LOGGER.info("Henter stillingstitler fra ontologien")
-        val titler = hentOntologiKlient.hentTitler()
-        LOGGER.info("Hentet ${titler.size} fra ontologien")
+        val stillingstitler = hentOntologiKlient.hentTitler()
+        LOGGER.info("Hentet ${stillingstitler.size} fra ontologien")
 
         val prefix = envConf.stillingtittelEsPrefix
-        val datestamp = Datestamp.getCurrent()
+        val datestamp = Datestamp.current
 
         opprettIndeks(prefix, datestamp)
 

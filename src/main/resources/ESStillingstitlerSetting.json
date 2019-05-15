@@ -1,0 +1,85 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "stillingstittel_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "stillingstittel_stop"
+          ]
+        },
+        "stillingstittel_completion_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "char_filter": [
+            "strip_apostrophe_s"
+          ],
+          "filter": [
+            "lowercase",
+            "stillingstittel_edge_ngrams"
+          ]
+        },
+        "stillingstittel_completion_search_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "char_filter": [
+            "strip_apostrophe_s"
+          ],
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "char_filter": {
+        "strip_apostrophe_s": {
+          "type": "pattern_replace",
+          "pattern": "([^ ])'([sS])",
+          "replacement": "$1$2"
+        }
+      },
+      "filter": {
+        "stillingstittel_stop": {
+          "type": "stop",
+          "stopwords": [
+            "as",
+            "asa",
+            "sa",
+            "da",
+            "an",
+            "avd"
+          ],
+          "ignore_case": true
+        },
+        "stillingstittel_edge_ngrams": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 30
+        }
+      }
+    }
+  },
+  "mappings": {
+    "stillingstittel": {
+      "properties": {
+        "label": {
+          "type": "text",
+          "analyzer": "stillingstittel_analyzer",
+          "copy_to": "navn_ngram_completion"
+        },
+        "konseptId": {
+          "type": "keyword"
+        },
+        "styrk08": {
+          "type": "keyword"
+        },
+        "navn_ngram_completion": {
+          "type": "text",
+          "analyzer": "stillingstittel_completion_analyzer",
+          "search_analyzer": "stillingstittel_completion_search_analyzer"
+        }
+      }
+    }
+  }
+}
