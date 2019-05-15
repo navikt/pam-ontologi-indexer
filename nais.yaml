@@ -1,0 +1,32 @@
+name: pam-ontologi-indexer
+team: teampam
+image: repo.adeo.no:5443/pam-ontologi-indexer
+replicas:
+  min: 1
+  max: 1
+  cpuThresholdPercentage: 50
+prometheus:
+  enabled: true
+  path: pam-ontologi-indexer/actuator/prometheus
+port: 8080
+healthcheck:
+  liveness:
+    path: pam-ontologi-indexer/internal/isAlive
+    initialDelay: 100
+  readiness:
+    path: pam-ontologi-indexer/internal/isReady
+    initialDelay: 100
+resources:
+  limits:
+    cpu: 800m
+    memory: 1024Mi
+  requests:
+    cpu: 200m
+    memory: 512Mi
+
+fasitResources:
+  used:
+  - alias: unleash-api
+    resourceType: restservice
+  - alias: janzz.rest
+    resourceType: credential
