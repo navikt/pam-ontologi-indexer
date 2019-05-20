@@ -106,7 +106,7 @@ public class ElasticsearchIndexClient extends RestHighLevelClient {
         BulkRequest request = new BulkRequest();
 
         for (Stillingstittel content : contents) {
-            request.add(new IndexRequest(lowerCaseIndex, STILLINGSTITTEL_TYPE, String.valueOf(content.getKonseptId()))
+            request.add(new IndexRequest(lowerCaseIndex, STILLINGSTITTEL_TYPE, String.valueOf(content.getKonseptId()) + "-" + content.getLabel())
                     .source(objectMapper.writeValueAsString(content), XContentType.JSON));
         }
         return bulk(request);

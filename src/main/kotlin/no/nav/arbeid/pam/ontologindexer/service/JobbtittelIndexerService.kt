@@ -37,6 +37,7 @@ class JobbtittelIndexerService {
 
         LOGGER.info("!!! JOB FINISHED! Time to verify the results")
 
+        Thread.sleep(2000)
         verifiser(prefix, datestamp, stillingstitler)
 
 
@@ -78,6 +79,10 @@ class JobbtittelIndexerService {
             LOGGER.error("Couldn't create and configure index. ", e)
             throw e
         }
+    }
+
+    fun deleteOldIndexes() {
+        indexService.deleteOlderIndices(envConf.stillingtittelEsPrefix)
     }
 
 

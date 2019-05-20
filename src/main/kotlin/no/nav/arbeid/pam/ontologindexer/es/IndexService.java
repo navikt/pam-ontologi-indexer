@@ -93,6 +93,7 @@ public class IndexService {
                 LOG.error("Failed item: {}, index: {}", item.getFailureMessage(), index);
                 failed++;
             } else {
+                LOG.info("Indexed item: {}, index: {}", item.getId(), index);
                 success++;
             }
         }
