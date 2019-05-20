@@ -27,7 +27,7 @@ class JobbtittelIndexerService {
         val stillingstitler = hentOntologiKlient.hentTitler()
         LOGGER.info("Hentet ${stillingstitler.size} fra ontologien")
 
-        val prefix = envConf.stillingtittelEsPrefix
+        val prefix = envConf.stillingtittelEsPrefix ?: "xxx"
         val datestamp = Datestamp.current
 
         opprettIndeks(prefix, datestamp)
@@ -43,7 +43,7 @@ class JobbtittelIndexerService {
 
     }
 
-    private fun verifiser(prefix: String?, datestamp: String?, stillingstitler: List<Stillingstittel>) {
+    private fun verifiser(prefix: String, datestamp: String, stillingstitler: List<Stillingstittel>) {
         try {
 
             val docCount = indexService.fetchDocCount(prefix, datestamp)
@@ -63,7 +63,7 @@ class JobbtittelIndexerService {
         }
     }
 
-    private fun indekser(prefix: String?, datestamp: String?, stillingstitler: List<Stillingstittel>) {
+    private fun indekser(prefix: String, datestamp: String, stillingstitler: List<Stillingstittel>) {
         try {
             indexService.indexJobTitles(prefix, datestamp, stillingstitler)
         } catch (e: Exception) {
@@ -72,7 +72,7 @@ class JobbtittelIndexerService {
         }
     }
 
-    private fun opprettIndeks(prefix: String?, datestamp: String?) {
+    private fun opprettIndeks(prefix: String, datestamp: String) {
         try {
             indexService.createAndConfigure(prefix, datestamp)
         } catch (e: IOException) {
@@ -82,7 +82,7 @@ class JobbtittelIndexerService {
     }
 
     fun deleteOldIndexes() {
-        indexService.deleteOlderIndices(envConf.stillingtittelEsPrefix)
+        indexService.deleteOlderIndices(envConf.stillingtittelEsPrefix ?: "xxx")
     }
 
 

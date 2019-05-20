@@ -1,5 +1,6 @@
 package no.nav.arbeid.pam.ontologindexer.service
 
+import no.nav.arbeid.pam.ontologindexer.config.EnvConf
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -14,10 +15,8 @@ import org.springframework.core.ParameterizedTypeReference
 @Service
 class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
 
-
-    @Value("\${ontologi.url:http://localhost:8189/pam-ontologi-synonymer/rest/typeahead/stilling/alle}")
-    lateinit var stillingstitlerUrl: String
-
+    @Autowired
+    lateinit var envConf: EnvConf
 
     private val restTemplate: RestTemplate
 
@@ -27,8 +26,8 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
     }
 
     fun hentTitler(): List<Stillingstittel> {
-        LOG.info("Hent ontologi med url/data request: $stillingstitlerUrl")
-        val response = restTemplate.exchange(stillingstitlerUrl, HttpMethod.GET, null, object: ParameterizedTypeReference<List<Stillingstittel>>(){}).body
+        LOG.info("Hent ontologi med url/data request: ${envConf.stillingstitlerUrl}")
+        val response = restTemplate.exchange(envConf.stillingstitlerUrl, HttpMethod.GET, null, object: ParameterizedTypeReference<List<Stillingstittel>>(){}).body
         LOG.info("response: $response")
         return response ?: throw RuntimeException("Tomt resultat fra hent ontologi kall")
     }
