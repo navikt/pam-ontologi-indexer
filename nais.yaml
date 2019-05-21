@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teampam
 spec:
-  image: repo.adeo.no:5443/pam-ontologi-indekser
+  image: repo.adeo.no:5443/pam-ontologi-indexer
   port: 9012
   replicas:
     min: 1
@@ -32,4 +32,4 @@ spec:
   vault:
     enabled: true
   ingresses:
-    - https://pam-ontologi-indekser.nais.oera.no
+    - https://pam-ontologi-indexer.nais.oera.no
