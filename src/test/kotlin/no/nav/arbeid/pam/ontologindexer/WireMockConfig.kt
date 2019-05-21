@@ -2,13 +2,12 @@ package no.nav.arbeid.pam.ontologindexer
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerServiceTest
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import org.slf4j.LoggerFactory
 
 @Profile("test")
 @Configuration

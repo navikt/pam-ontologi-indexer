@@ -49,7 +49,7 @@ constructor(client: RestClientBuilder,
 
         val lowerCaseIndices = indices.map { it.toLowerCase() }.toTypedArray()
 
-        if (lowerCaseIndices.size > 0) {
+        if (lowerCaseIndices.isNotEmpty()) {
             indices().delete(DeleteIndexRequest(*lowerCaseIndices))
         }
     }
@@ -137,7 +137,7 @@ constructor(client: RestClientBuilder,
     companion object {
 
         private val LOG = LoggerFactory.getLogger(ElasticsearchIndexClient::class.java)
-        private val STILLINGSTITTEL_TYPE = "stillingstittel"
+        private const val STILLINGSTITTEL_TYPE = "stillingstittel"
     }
 
 }

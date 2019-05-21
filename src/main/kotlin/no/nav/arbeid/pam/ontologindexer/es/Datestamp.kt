@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 
 object Datestamp {
 
-    val DATESTAMP_FORMAT = "yyyyMMdd"
+    private const val DATESTAMP_FORMAT = "yyyyMMdd"
 
     val current: String
         get() = LocalDate.now().format(DateTimeFormatter.ofPattern(DATESTAMP_FORMAT))

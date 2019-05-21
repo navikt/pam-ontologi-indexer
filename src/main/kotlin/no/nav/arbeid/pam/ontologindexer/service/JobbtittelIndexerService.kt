@@ -20,7 +20,7 @@ class JobbtittelIndexerService {
     lateinit var indexService: IndexService
 
     @Autowired
-    lateinit var envConf:EnvConf
+    lateinit var envConf: EnvConf
 
     fun indekser() {
         LOGGER.info("Henter stillingstitler fra ontologien")

@@ -2,12 +2,9 @@ package no.nav.arbeid.pam.ontologindexer.es
 
 import no.nav.arbeid.pam.ontologindexer.service.Stillingstittel
 import org.apache.commons.lang3.StringUtils
-import org.elasticsearch.action.bulk.BulkItemResponse
 import org.elasticsearch.action.bulk.BulkResponse
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -99,11 +96,11 @@ class IndexService(private val client: ElasticsearchIndexClient) {
 
     private fun indexIsBefore(index: String, prefix: String, date: LocalDate): Boolean {
 
-        try {
-            return Datestamp.parseFrom(StringUtils.remove(index, prefix)).isBefore(date)
+        return try {
+            Datestamp.parseFrom(StringUtils.remove(index, prefix)).isBefore(date)
         } catch (e: DateTimeParseException) {
             LOG.error("Couldn't parse date from index name {}", index)
-            return false
+            false
         }
 
     }
@@ -111,8 +108,8 @@ class IndexService(private val client: ElasticsearchIndexClient) {
     companion object {
 
         private val LOG = LoggerFactory.getLogger(IndexService::class.java)
-        private val CLASSPATH_SETTINGS = "/ESStillingstitlerSetting.json"
-        private val INDEX_EXPIRATION_IN_DAYS = 10
+        private const val CLASSPATH_SETTINGS = "/ESStillingstitlerSetting.json"
+        private const val INDEX_EXPIRATION_IN_DAYS = 10
 
         private fun indexOf(prefix: String, datestamp: String): String {
             return prefix + datestamp

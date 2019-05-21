@@ -1,6 +1,5 @@
 package no.nav.arbeid.pam.ontologindexer
 
-import no.nav.arbeid.pam.ontologindexer.service.HentOntologiKlient
 import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +17,7 @@ class OntologiScheduler {
 
     @Scheduled(cron = CRON_INDEXER)
     fun leggInnStillingstitler() {
-        LOGGER.info("leggInnStillingstitler scheduled job startet cron:${CRON_INDEXER}")
+        LOGGER.info("leggInnStillingstitler scheduled job startet cron:$CRON_INDEXER")
         jobbtittelIndexerService.indekser()
         LOGGER.info("leggInnStillingstitler scheduled job avsluttet")
     }
@@ -27,7 +26,7 @@ class OntologiScheduler {
     fun cleanup() {
 
         try {
-            LOGGER.info("Deleting older indices cron:${CRON_CLEANUP}")
+            LOGGER.info("Deleting older indices cron:$CRON_CLEANUP")
             jobbtittelIndexerService.deleteOldIndexes()
             LOGGER.info("Deleted older indices")
         } catch (e: IOException) {

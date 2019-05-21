@@ -23,7 +23,7 @@ class JobbtittelIndexerServiceTest {
     lateinit var jobbtittelIndexerService: JobbtittelIndexerService
 
     @Test
-    @Ignore("Krever oppstart av pam-elasticsearch docker container")
+    //@Ignore("Krever oppstart av pam-elasticsearch docker container")
     fun skalFaaResultat() {
         jobbtittelIndexerService.indekser()
     }
