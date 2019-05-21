@@ -1,9 +1,10 @@
-package no.nav.arbeid.pam.ontologindexer.service
+package no.nav.arbeid.pam.ontologindexer
 
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
-import no.nav.arbeid.pam.ontologindexer.PamOntologiIndexerApplication
+import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerService
+import no.nav.arbeid.pam.ontologindexer.service.WiremockResponse
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(classes = [PamOntologiIndexerApplication::class])
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class JobbtittelIndexerServiceTest {
+class ITest {
 
     @Autowired
     lateinit var jobbtittelIndexerService: JobbtittelIndexerService

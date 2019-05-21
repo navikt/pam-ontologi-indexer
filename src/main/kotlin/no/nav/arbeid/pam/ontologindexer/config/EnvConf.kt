@@ -6,16 +6,13 @@ import org.springframework.stereotype.Component
 @Component
 class EnvConf {
 
-    @Value("\${pam.stillingstitler.url:http://localhost:8189/pam-ontologi-synonymer/rest/typeahead/stilling/alle}")
+    @Value("\${pam.stillingstitler.url}")
     lateinit var stillingstitlerUrl: String
 
-    @Value("\${pam.es.ontologi.stillingtittel.prefix:ontologi-stillingstittel-}")
+    @Value("\${pam.es.ontologi.stillingtittel.prefix}")
     val stillingtittelEsPrefix: String? = null
 
-    @Value("\${pam.es.url:http://localhost:9210}")
+    @Value("\${pam.es.url}")
     val elasticsearchUrl: String? = null
-
-    @Value("\${pam.http.proxy.url:#{null}}")
-    val httpProxyUrl: String? = null
 
 }

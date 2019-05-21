@@ -3,7 +3,6 @@ package no.nav.arbeid.pam.ontologindexer
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerServiceTest
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,9 +18,9 @@ class WireMockConfig {
     fun wireMockServer(): WireMockServer {
         LOGGER.info("Starter Wiremock")
         val wireMockServer = WireMockServer(wireMockConfig().notifier(ConsoleNotifier(true)).port(8189))
-        wireMockServer.stubFor(JobbtittelIndexerServiceTest.mappingBuilder())
+        wireMockServer.stubFor(ITest.mappingBuilder())
         wireMockServer.start()
-        LOGGER.info("Wiremock startet")
+        LOGGER.info("Wiremock startet ${wireMockServer.isRunning} ${wireMockServer.port()}")
         return wireMockServer
     }
 

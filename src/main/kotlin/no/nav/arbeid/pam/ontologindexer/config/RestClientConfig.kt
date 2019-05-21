@@ -10,14 +10,12 @@ import org.springframework.context.annotation.Profile
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 
 @Configuration
-@Profile("!test")
-class RestClientConfig(@param:Value("\${DRIFTPROXY_URL:http://proxy.com}") private val proxyUrl: String) {
+class RestClientConfig {
 
     @Bean
-    fun proxyTemplateCustomizer(): RestTemplateCustomizer {
+    fun templateCustomizer(): RestTemplateCustomizer {
         return RestTemplateCustomizer { restTemplate ->
-            val proxy = HttpHost.create(proxyUrl)
-            val httpClient = HttpClientBuilder.create().setProxy(proxy).build()
+            val httpClient = HttpClientBuilder.create().build()
             restTemplate.requestFactory = HttpComponentsClientHttpRequestFactory(httpClient)
         }
     }

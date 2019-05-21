@@ -28,7 +28,7 @@ spec:
     requests:
       cpu: 500m
       memory: 500Mi
-  webproxy: true
+  webproxy: false
   vault:
     enabled: true
   ingresses:

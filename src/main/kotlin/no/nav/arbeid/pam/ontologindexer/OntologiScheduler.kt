@@ -20,23 +20,17 @@ class OntologiScheduler {
         LOGGER.info("leggInnStillingstitler scheduled job startet cron:$CRON_INDEXER")
         jobbtittelIndexerService.indekser()
         LOGGER.info("leggInnStillingstitler scheduled job avsluttet")
-    }
-
-    @Scheduled(cron = CRON_CLEANUP)
-    fun cleanup() {
 
         try {
-            LOGGER.info("Deleting older indices cron:$CRON_CLEANUP")
+            LOGGER.info("Deleting older indices")
             jobbtittelIndexerService.deleteOldIndexes()
             LOGGER.info("Deleted older indices")
         } catch (e: IOException) {
             LOGGER.error("Failed to delete older indices", e)
         }
-
     }
 
     companion object {
         const val CRON_INDEXER = "0 0 1 * * *"
-        const val CRON_CLEANUP = "0 0 2 * * *"
     }
 }
