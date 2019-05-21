@@ -67,7 +67,7 @@ class IndexService(private val client: ElasticsearchIndexClient) {
                 LOG.error("Failed item: {}, index: {}", item.failureMessage, index)
                 failed++
             } else {
-                LOG.info("Indexed item: {}, index: {}", item.id, index)
+                LOG.debug("Indexed item: {}, index: {}", item.id, index)
                 success++
             }
         }

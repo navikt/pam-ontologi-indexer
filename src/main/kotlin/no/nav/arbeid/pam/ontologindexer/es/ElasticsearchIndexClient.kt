@@ -91,14 +91,14 @@ constructor(client: RestClientBuilder,
     @Throws(IOException::class)
     fun indexBulk(contents: List<Stillingstittel>, index: String): BulkResponse {
 
-        val lowerCaseIndex = index.toLowerCase()
-        val request = BulkRequest()
-
-        for (content in contents) {
-            request.add(IndexRequest(lowerCaseIndex, STILLINGSTITTEL_TYPE, content.konseptId.toString() + "-" + content.label)
-                    .source(objectMapper.writeValueAsString(content), XContentType.JSON))
-        }
-        return bulk(request)
+        return bulk(
+                BulkRequest().apply {
+                    contents.forEach {
+                        this.add(IndexRequest(index.toLowerCase(), STILLINGSTITTEL_TYPE, it.konseptId.toString() + "-" + it.label)
+                                .source(objectMapper.writeValueAsString(it), XContentType.JSON))
+                    }
+                }
+        )
 
     }
 
@@ -123,12 +123,10 @@ constructor(client: RestClientBuilder,
         val full = EntityUtils.toString(response.entity)
 
         if (!(full == null || full.trim { it <= ' ' } == "")) {
-            val lines = full.split("\\r?\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
-            for (line in lines) {
-                val tokenized = line.split("\\s".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                indices.add(tokenized[2])
-            }
+            full.split("\\r?\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                    .map {
+                        it.split("\\s".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[2]
+                    }
         }
 
         return indices
