@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import no.nav.arbeid.pam.ontologindexer.PamOntologiIndexerApplication
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +23,7 @@ class JobbtittelIndexerServiceTest {
     lateinit var jobbtittelIndexerService: JobbtittelIndexerService
 
     @Test
+    //@Ignore("Krever oppstart av pam-elasticsearch docker container")
     fun skalFaaResultat() {
         jobbtittelIndexerService.indekser()
     }
