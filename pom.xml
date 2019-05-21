@@ -120,6 +120,45 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<executions>
+					<!-- Replacing default-compile as it is treated specially by maven -->
+					<execution>
+						<id>default-compile</id>
+						<phase>none</phase>
+						<configuration>
+							<compileSourceRoots>${project.basedir}/src/main/java</compileSourceRoots>
+						</configuration>
+					</execution>
+					<!-- Replacing default-testCompile as it is treated specially by maven -->
+					<execution>
+						<id>default-testCompile</id>
+						<phase>none</phase>
+						<configuration>
+							<compileSourceRoots>${project.basedir}/src/test/java</compileSourceRoots>
+						</configuration>
+					</execution>
+					<execution>
+						<id>java-compile</id>
+						<phase>compile</phase>
+						<goals> <goal>compile</goal> </goals>
+						<configuration>
+							<compileSourceRoots>${project.basedir}/src/main/java</compileSourceRoots>
+						</configuration>
+					</execution>
+					<execution>
+						<id>java-test-compile</id>
+						<phase>test-compile</phase>
+						<goals> <goal>testCompile</goal> </goals>
+						<configuration>
+							<compileSourceRoots>${project.basedir}/src/test/java</compileSourceRoots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
