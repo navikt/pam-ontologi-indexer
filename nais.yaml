@@ -14,13 +14,13 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
-    path: /actuator/prometheus
+    path: /internal/actuator/prometheus
   liveness:
     initialDelay: 40
-    path: internal/isAlive
+    path: /internal/isAlive
   readiness:
     initialDelay: 40
-    path: internal/isReady
+    path: /internal/isReady
   resources:
     limits:
       cpu: 1000m
@@ -33,3 +33,8 @@ spec:
     enabled: true
   ingresses:
     - https://pam-ontologi-indexer.nais.oera.no
+  env:
+    - name: PAM_STILLINGSTITLER_URL
+      value: https://pam-ontologi-synonymer.nais.oera.no/pam-ontologi-synonymer/rest/typeahead/stilling/alle
+    - name: PAM_ES_URL
+      value: https://pamsok-elasticsearch.nais.oera.no
