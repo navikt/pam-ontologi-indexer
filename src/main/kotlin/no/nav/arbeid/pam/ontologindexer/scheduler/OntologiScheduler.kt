@@ -1,4 +1,4 @@
-package no.nav.arbeid.pam.ontologindexer
+package no.nav.arbeid.pam.ontologindexer.scheduler
 
 import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerService
 import org.slf4j.LoggerFactory

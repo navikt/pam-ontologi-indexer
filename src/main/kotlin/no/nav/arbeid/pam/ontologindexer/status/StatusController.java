@@ -1,4 +1,4 @@
-package no.nav.arbeid.pam.ontologindexer;
+package no.nav.arbeid.pam.ontologindexer.status;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,8 +8,11 @@ import org.springframework.boot.actuate.health.Status;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller("/internal")
+@RestController
+@RequestMapping("/internal")
 public class StatusController {
 
     private final IndexClientHealthIndicator indexClientHealthIndicator;
@@ -29,7 +32,7 @@ public class StatusController {
         return ResponseEntity.ok("OK");
     }
 
-    @GetMapping(path = "/internal/status")
+    @GetMapping(path = "/status")
     public ResponseEntity<ObjectNode> statusHealth() {
 
         boolean isElastisSearchOK = indexClientHealthIndicator.health().getStatus().equals(Status.UP);
