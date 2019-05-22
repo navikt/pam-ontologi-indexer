@@ -30,7 +30,7 @@ spec:
       memory: 500Mi
   webproxy: false
   vault:
-    enabled: true
+    enabled: false
   ingresses:
     - https://pam-ontologi-indexer.nais.oera.no
   env:
