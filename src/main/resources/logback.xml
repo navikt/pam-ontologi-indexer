@@ -10,7 +10,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="trace" additivity="false">
+	<logger name="org.springframework" level="info" additivity="false">
 		<appender-ref ref="stdout_json" />
 	</logger>
 
