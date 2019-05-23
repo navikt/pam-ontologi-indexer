@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/internal")
 public class StatusController {
 
-    private final IndexClientHealthIndicator indexClientHealthIndicator;
+    //private final IndexClientHealthIndicator indexClientHealthIndicator;
 
-    @Autowired
+    /*@Autowired
     public StatusController(IndexClientHealthIndicator indexClientHealthIndicator) {
         this.indexClientHealthIndicator = indexClientHealthIndicator;
-    }
+    }*/
 
     @GetMapping(path = "/isAlive")
     public ResponseEntity<String> isAlive() {
@@ -32,7 +32,7 @@ public class StatusController {
         return ResponseEntity.ok("OK");
     }
 
-    @GetMapping(path = "/status")
+    /*@GetMapping(path = "/status")
     public ResponseEntity<ObjectNode> statusHealth() {
 
         boolean isElastisSearchOK = indexClientHealthIndicator.health().getStatus().equals(Status.UP);
@@ -42,5 +42,5 @@ public class StatusController {
         node.put("Elastic Search connection status", (isElastisSearchOK) ? "OK" : "NOT OK");
 
         return ResponseEntity.ok(node);
-    }
+    }*/
 }
