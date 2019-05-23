@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 @SpringBootApplication
 @EnableScheduling
-@Import(StatusController::class)
 class PamOntologiIndexerApplication
 
 fun main(args: Array<String>) {
