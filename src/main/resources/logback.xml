@@ -14,6 +14,10 @@
 		<appender-ref ref="stdout_json" />
 	</logger>
 
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="trace" additivity="false">
+		<appender-ref ref="stdout_json" />
+	</logger>
+
 	<logger name="no.nav" level="info" additivity="false">
 		<appender-ref ref="stdout_json" />
 	</logger>
