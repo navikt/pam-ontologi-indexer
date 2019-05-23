@@ -16,10 +16,10 @@ spec:
     enabled: true
     path: /pam-ontologi-indexer/internal/actuator/prometheus
   liveness:
-    initialDelay: 60
+    initialDelay: 180
     path: /pam-ontologi-indexer/internal/isAlive
   readiness:
-    initialDelay: 60
+    initialDelay: 180
     path: /pam-ontologi-indexer/internal/isReady
   resources:
     limits:
