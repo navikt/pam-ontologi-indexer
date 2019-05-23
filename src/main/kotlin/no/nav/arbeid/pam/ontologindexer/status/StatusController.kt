@@ -6,21 +6,14 @@ import no.nav.arbeid.pam.ontologindexer.es.IndexClientHealthIndicator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.actuate.health.Status
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/internal")
-class StatusController {
-
-    //private final IndexClientHealthIndicator indexClientHealthIndicator;
-
-    /*@Autowired
-    public StatusController(IndexClientHealthIndicator indexClientHealthIndicator) {
-        this.indexClientHealthIndicator = indexClientHealthIndicator;
-    }*/
+class StatusController @Autowired
+constructor(private val indexClientHealthIndicator: IndexClientHealthIndicator) {
 
     val isAlive: ResponseEntity<String>
         @GetMapping(path = ["/isAlive"])
@@ -30,15 +23,15 @@ class StatusController {
         @GetMapping(path = ["/isReady"])
         get() = ResponseEntity.ok("OK")
 
-    /*@GetMapping(path = "/status")
-    public ResponseEntity<ObjectNode> statusHealth() {
+    @GetMapping(path = ["/status"])
+    fun statusHealth(): ResponseEntity<ObjectNode> {
 
-        boolean isElastisSearchOK = indexClientHealthIndicator.health().getStatus().equals(Status.UP);
+        val isElastisSearchOK = indexClientHealthIndicator.health().status == Status.UP
 
 
-        ObjectNode node = JsonNodeFactory.instance.objectNode();
-        node.put("Elastic Search connection status", (isElastisSearchOK) ? "OK" : "NOT OK");
+        val node = JsonNodeFactory.instance.objectNode()
+        node.put("Elastic Search connection status", if (isElastisSearchOK) "OK" else "NOT OK")
 
-        return ResponseEntity.ok(node);
-    }*/
+        return ResponseEntity.ok(node)
+    }
 }
