@@ -14,7 +14,7 @@
         <appender-ref ref="stdout_json"/>
     </logger>
 
-    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="trace"
+    <logger name="org.springframework" level="info"
             additivity="false">
         <appender-ref ref="stdout_json"/>
     </logger>
