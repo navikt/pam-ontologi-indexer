@@ -2,6 +2,7 @@ package no.nav.arbeid.pam.ontologindexer
 
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import no.nav.arbeid.pam.ontologindexer.service.JobbtittelIndexerService
 import no.nav.arbeid.pam.ontologindexer.service.WiremockResponse
@@ -32,6 +33,7 @@ class ITest {
     companion object {
         fun mappingBuilder(): MappingBuilder {
             return WireMock.get(urlPathMatching("/pam-ontologi-synonymer/rest/typeahead/stilling/alle"))
+                    .withHeader("x-nav-apiKey", equalTo("testkey"))
                     .willReturn(WireMock.aResponse().withStatus(200)
                             .withHeader("Content-Type", "application/json")
                             .withBody(WiremockResponse.stillingstittelResponse))

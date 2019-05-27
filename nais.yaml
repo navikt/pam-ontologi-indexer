@@ -34,7 +34,7 @@ spec:
   ingresses:
     - https://pam-ontologi-indexer.nais.oera.no
   env:
-    - name: PAM_STILLINGSTITLER_URL
-      value: https://pam-ontologi-synonymer.nais.oera.no/pam-ontologi-synonymer/rest/typeahead/stilling/alle
+    - name: PAM_SYNONYMER_TYPEAHEAD_URL
+      value: https://api-gw-p.oera.no/pam-ontologi-synonymer/rest/typeahead
     - name: PAM_ES_URL
       value: https://pamsok-elasticsearch.nais.oera.no
