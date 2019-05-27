@@ -37,4 +37,4 @@ spec:
     - name: PAM_SYNONYMER_TYPEAHEAD_URL
       value: https://api-gw-q0.oera.no/pam-ontologi-synonymer/rest/typeahead
     - name: PAM_ES_URL
-      value: https://pamsok-elasticsearch.nais.oera-q.local
+      value: https://tpa-pamsok-elasticsearch.nais.oera-q.local

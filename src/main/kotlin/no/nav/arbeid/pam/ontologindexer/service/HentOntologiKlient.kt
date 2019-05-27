@@ -24,7 +24,8 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
 
         LOG.info("Hent ontologi med url/data request: ${envConf.typeaheadStillingstittlerGwUrl}")
         val response = restTemplate.exchange("${envConf.typeaheadStillingstittlerGwUrl}" , HttpMethod.GET, entity, object : ParameterizedTypeReference<List<Stillingstittel>>() {}).body
-        LOG.info("response: $response")
+        val antall = if(response != null) response.size else 0
+        LOG.info("Titler returnert: ${antall}")
         return response ?: throw RuntimeException("Tomt resultat fra hent ontologi kall")
     }
 
