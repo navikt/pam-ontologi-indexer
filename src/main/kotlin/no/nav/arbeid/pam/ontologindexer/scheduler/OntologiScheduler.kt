@@ -15,12 +15,10 @@ class OntologiScheduler {
     @Autowired
     lateinit var jobbtittelIndexerService: JobbtittelIndexerService
 
-    //@Scheduled(cron = CRON_INDEXER)
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(cron = CRON_INDEXER)
     fun leggInnStillingstitler() {
-        //LOGGER.info("leggInnStillingstitler scheduled job startet cron:$CRON_INDEXER")
-        LOGGER.info("leggInnStillingstitler scheduled job startet cron:fixedDelay = 300000")
-
+        
+        LOGGER.info("leggInnStillingstitler scheduled job startet cron:$CRON_INDEXER")
         jobbtittelIndexerService.indekser()
         LOGGER.info("leggInnStillingstitler scheduled job avsluttet")
 
