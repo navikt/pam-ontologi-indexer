@@ -56,9 +56,11 @@ class ITest {
         val yesterdayStamp = Datestamp.format(LocalDate.now().minusDays(1))
         val currentStamp = Datestamp.current
 
+        indexService.createAndConfigure("some-other-index", oldStamp)
         indexService.createAndConfigure(prefix, oldStamp)
         indexService.createAndConfigure(prefix, yesterdayStamp)
         indexService.createAndConfigure(prefix, currentStamp)
+        assertTrue(elasticSearchClient.indexExists("some-other-index" + oldStamp))
         assertTrue(elasticSearchClient.indexExists(prefix + oldStamp))
         assertTrue(elasticSearchClient.indexExists(prefix + yesterdayStamp))
         assertTrue(elasticSearchClient.indexExists(prefix + currentStamp))
@@ -68,6 +70,10 @@ class ITest {
         assertFalse(elasticSearchClient.indexExists(prefix + oldStamp))
         assertTrue(elasticSearchClient.indexExists(prefix + yesterdayStamp))
         assertTrue(elasticSearchClient.indexExists(prefix + currentStamp))
+        assertTrue(elasticSearchClient.indexExists("some-other-index" + oldStamp))
+
+        // clean up
+        elasticSearchClient.deleteIndex("some-other-index" + oldStamp)
     }
 
     companion object {
