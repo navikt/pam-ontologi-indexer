@@ -47,6 +47,7 @@ class ITest {
         jobbtittelIndexerService.indekser()
     }
 
+    // TODO should be easy to mock ElasticsearchIndexClient client for this test to work without real ES
     @Test
     @Ignore("Krever lokal ElasticSearch-instans kjørende på http://localhost:9200")
     fun sletteGamleIndekser() {
