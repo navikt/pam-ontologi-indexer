@@ -117,19 +117,16 @@ constructor(client: RestClientBuilder,
     fun fetchAllIndicesStartingWith(name: String): List<String> {
 
         val lowerCaseName = name.toLowerCase()
-        val indices = ArrayList<String>()
         val response = lowLevelClient.performRequest("GET", "/_cat/indices/$lowerCaseName*")
 
         val full = EntityUtils.toString(response.entity)
 
-        if (!(full == null || full.trim { it <= ' ' } == "")) {
+        return if (!(full == null || full.trim { it <= ' ' } == "")) {
             full.split("\\r?\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     .map {
                         it.split("\\s".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[2]
                     }
-        }
-
-        return indices
+        } else emptyList()
     }
 
     companion object {

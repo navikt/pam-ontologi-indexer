@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>pam-ontologi-indexer</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Ontology indexer</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

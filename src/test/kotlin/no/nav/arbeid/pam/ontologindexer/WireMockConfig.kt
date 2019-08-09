@@ -14,7 +14,7 @@ class WireMockConfig {
 
     private val LOGGER = LoggerFactory.getLogger(WireMockConfig::class.java)
 
-    @Bean
+    @Bean(destroyMethod = "stop")
     fun wireMockServer(): WireMockServer {
         LOGGER.info("Starter Wiremock")
         val wireMockServer = WireMockServer(wireMockConfig().notifier(ConsoleNotifier(true)).port(8189))
