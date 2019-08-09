@@ -14,13 +14,13 @@ spec:
     cpuThresholdPercentage: 50
   prometheus:
     enabled: true
-    path: /pam-ontologi-indexer/internal/actuator/prometheus
+    path: /internal/actuator/prometheus
   liveness:
-    initialDelay: 180
-    path: /pam-ontologi-indexer/internal/isAlive
+    initialDelay: 60
+    path: /internal/isAlive
   readiness:
-    initialDelay: 180
-    path: /pam-ontologi-indexer/internal/isReady
+    initialDelay: 60
+    path: /internal/isReady
   resources:
     limits:
       cpu: 1000m
