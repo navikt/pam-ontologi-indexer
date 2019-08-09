@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Service
 import java.io.IOException
-import java.util.*
+import kotlin.streams.toList
 
 /**
  * Elasticsearch client implementation.
@@ -119,14 +119,13 @@ constructor(client: RestClientBuilder,
         val lowerCaseName = name.toLowerCase()
         val response = lowLevelClient.performRequest("GET", "/_cat/indices/$lowerCaseName*")
 
-        val full = EntityUtils.toString(response.entity)
-
-        return if (!(full == null || full.trim { it <= ' ' } == "")) {
-            full.split("\\r?\\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    .map {
-                        it.split("\\s".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[2]
-                    }
-        } else emptyList()
+        return response.entity.content.bufferedReader().lines().filter {
+            !it.trim().isEmpty()
+        }.map {
+            it.split("\\s+".toRegex())[2]
+        }.filter {
+            it.startsWith(lowerCaseName) // Extra sanity check
+        }.toList()
     }
 
     companion object {
