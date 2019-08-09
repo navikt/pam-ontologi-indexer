@@ -85,13 +85,19 @@ class IndexService(private val client: ElasticsearchIndexClient) {
 
         val prefixLowercased = prefix.toLowerCase()
         val maxAge = LocalDate.now().minusDays(INDEX_EXPIRATION_IN_DAYS.toLong())
-        client.deleteIndex(
-                *client
-                        .fetchAllIndicesStartingWith(prefixLowercased)
-                        .filter { index -> indexIsBefore(index, prefixLowercased, maxAge) }
-                        .toTypedArray()
-        )
 
+        val oldIndexNames = client
+                .fetchAllIndicesStartingWith(prefixLowercased)
+                .filter { index -> indexIsBefore(index, prefixLowercased, maxAge) }
+                .toTypedArray()
+
+        if (oldIndexNames.isNotEmpty()) {
+            LOG.info("Delete indices older than ${INDEX_EXPIRATION_IN_DAYS} days: " + oldIndexNames.joinToString(", "))
+        } else {
+            LOG.info("No indices older than ${INDEX_EXPIRATION_IN_DAYS} days found")
+        }
+
+        client.deleteIndex(*oldIndexNames)
     }
 
     private fun indexIsBefore(index: String, prefix: String, date: LocalDate): Boolean {

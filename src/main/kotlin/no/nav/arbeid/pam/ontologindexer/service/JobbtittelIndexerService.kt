@@ -82,7 +82,9 @@ class JobbtittelIndexerService {
     }
 
     fun deleteOldIndexes() {
-        indexService.deleteOlderIndices(envConf.stillingtittelEsPrefix ?: "xxx")
+        val prefix = envConf.stillingtittelEsPrefix!!
+        LOGGER.info("Will delete old indices prefixed with '${prefix}' ..")
+        indexService.deleteOlderIndices(prefix)
     }
 
 
