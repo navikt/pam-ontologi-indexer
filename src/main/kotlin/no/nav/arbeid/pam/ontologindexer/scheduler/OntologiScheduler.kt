@@ -18,7 +18,7 @@ class OntologiScheduler {
     @Scheduled(cron = CRON_INDEXER)
     fun leggInnStillingstitler() {
         
-        LOGGER.info("leggInnStillingstitler scheduled job startet cron:$CRON_INDEXER")
+        LOGGER.info("leggInnStillingstitler scheduled job startet cron: $CRON_INDEXER")
         jobbtittelIndexerService.indekser()
         LOGGER.info("leggInnStillingstitler scheduled job avsluttet")
 
