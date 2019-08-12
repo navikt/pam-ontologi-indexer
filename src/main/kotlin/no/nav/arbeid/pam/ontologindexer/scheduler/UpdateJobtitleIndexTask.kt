@@ -9,8 +9,8 @@ import java.io.IOException
 
 
 @Component
-class OntologiScheduler {
-    private val LOGGER = LoggerFactory.getLogger(OntologiScheduler::class.java)
+class UpdateJobtitleIndexTask {
+    private val LOGGER = LoggerFactory.getLogger(UpdateJobtitleIndexTask::class.java)
 
     @Autowired
     lateinit var jobbtittelIndexerService: JobbtittelIndexerService
