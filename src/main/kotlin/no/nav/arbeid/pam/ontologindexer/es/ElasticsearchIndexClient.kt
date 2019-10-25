@@ -5,16 +5,16 @@ import no.nav.arbeid.pam.ontologindexer.service.Stillingstittel
 import org.apache.http.entity.ContentType
 import org.apache.http.nio.entity.NStringEntity
 import org.apache.http.util.EntityUtils
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest
+
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
 import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.bulk.BulkResponse
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.*
+import org.elasticsearch.client.indices.CreateIndexRequest
 import org.elasticsearch.common.xcontent.XContentType
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Service
 import java.io.IOException
 import java.util.stream.Collectors.toList
@@ -89,12 +89,12 @@ constructor(elasticClientBuilder: RestClientBuilder,
         return bulk(
                 BulkRequest().apply {
                     contents.forEach {
-                        this.add(IndexRequest(index.toLowerCase(), STILLINGSTITTEL_TYPE, it.konseptId.toString() + "-" + it.label)
-                                .source(objectMapper.writeValueAsString(it), XContentType.JSON))
+                        this.add(IndexRequest(index.toLowerCase()).id("${it.konseptId.toString()}-${it.label}")
+                                .source(objectMapper.writeValueAsString(it)
+                                        , XContentType.JSON))
                     }
                 }
-        )
-
+        , RequestOptions.DEFAULT)
     }
 
     @Throws(IOException::class)
@@ -124,9 +124,7 @@ constructor(elasticClientBuilder: RestClientBuilder,
     }
 
     companion object {
-
         private val LOG = LoggerFactory.getLogger(ElasticsearchIndexClient::class.java)
-        private const val STILLINGSTITTEL_TYPE = "stillingstittel"
     }
 
 }

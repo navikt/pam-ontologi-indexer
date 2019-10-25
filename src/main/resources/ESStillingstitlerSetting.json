@@ -61,7 +61,6 @@
     }
   },
   "mappings": {
-    "stillingstittel": {
       "properties": {
         "label": {
           "type": "text",
@@ -80,6 +79,5 @@
           "search_analyzer": "stillingstittel_completion_search_analyzer"
         }
       }
-    }
   }
 }
