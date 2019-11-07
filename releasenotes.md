@@ -1,3 +1,6 @@
+## RELEASE - 0.7.51-6939b03
+#### New in this release: 
++ 2019-10-25 [UPDRADE] update to ES 7.2.0
 ## RELEASE - 0.6.50-93c529b
 #### New in this release: 
 + 2019-08-10 [Lift] app to JVM 12, with updated Kotlin, ES client and Spring-Boot
