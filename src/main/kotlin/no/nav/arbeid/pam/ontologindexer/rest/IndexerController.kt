@@ -16,7 +16,7 @@ constructor(private val indexerService: JobbtittelIndexerService) {
     @PostMapping(path = ["/reindex"])
     fun reindex(): ResponseEntity<String> {
         return try {
-            indexerService.indekser()
+            indexerService.indexJanzzConcepts()
             ResponseEntity.ok("OK")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed: " + e.message)

@@ -17,9 +17,9 @@ class UpdateJobtitleIndexTask {
 
     @Scheduled(cron = CRON_INDEXER)
     fun leggInnStillingstitler() {
-        
+
         LOGGER.info("leggInnStillingstitler scheduled job startet cron: $CRON_INDEXER")
-        jobbtittelIndexerService.indekser()
+        jobbtittelIndexerService.indexJanzzConcepts()
         LOGGER.info("leggInnStillingstitler scheduled job avsluttet")
 
         try {

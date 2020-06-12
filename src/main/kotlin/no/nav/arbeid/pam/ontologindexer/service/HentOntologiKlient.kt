@@ -18,15 +18,35 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
 
     private val restTemplate: RestTemplate = templateBuilder.build()
 
-    fun hentTitler(): List<Stillingstittel> {
+    fun fetchOccupationTitles(): List<Stillingstittel> {
 
         val entity:HttpEntity<String> = HttpEntity(envConf.gwHeaders())
 
         LOG.info("Hent ontologi med url/data request: ${envConf.typeaheadStillingstittlerGwUrl}")
-        val response = restTemplate.exchange("${envConf.typeaheadStillingstittlerGwUrl}" , HttpMethod.GET, entity, object : ParameterizedTypeReference<List<Stillingstittel>>() {}).body
-        val antall = if(response != null) response.size else 0
-        LOG.info("Titler returnert: ${antall}")
-        return response ?: throw RuntimeException("Tomt resultat fra hent ontologi kall")
+        val response = restTemplate.exchange(
+                "${envConf.typeaheadStillingstittlerGwUrl}",
+                HttpMethod.GET,
+                entity,
+                object : ParameterizedTypeReference<List<Stillingstittel>>() {})
+                .body ?: throw RuntimeException("Tomt resultat fra hent ontologi kall til stillinger/alle")
+
+        LOG.info("Titler returnert: ${response.size}")
+        return response
+    }
+
+    fun fetchSkills(): List<Skill> {
+        val entity:HttpEntity<String> = HttpEntity(envConf.gwHeaders())
+
+        LOG.info("Hent ontologi med url/data request: ${envConf.typeaheadSkillsGwUrl}")
+        val response = restTemplate.exchange(
+                "${envConf.typeaheadSkillsGwUrl}",
+                HttpMethod.GET,
+                entity,
+                object : ParameterizedTypeReference<List<Skill>>() {})
+                .body ?: throw RuntimeException("Tomt resultat fra hent ontologi kall til kompetanser/alle")
+
+        LOG.info("Kompetanser returnert: ${response.size}")
+        return response
     }
 
     companion object {
@@ -34,8 +54,19 @@ class HentOntologiKlient(templateBuilder: RestTemplateBuilder) {
     }
 }
 
-data class Stillingstittel(
-        val konseptId: Int = 0,
-        val label: String = "",
-        val styrk08: String = ""
+
+abstract class JanzzConcept(
+        open val konseptId: Int = 0,
+        open val label: String = ""
 )
+
+data class Skill(
+        override val konseptId: Int = 0,
+        override val label: String = ""
+): JanzzConcept()
+
+data class Stillingstittel(
+        override val konseptId: Int = 0,
+        override val label: String = "",
+        val styrk08: String = ""
+): JanzzConcept()

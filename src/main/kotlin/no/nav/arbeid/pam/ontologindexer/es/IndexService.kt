@@ -1,5 +1,7 @@
 package no.nav.arbeid.pam.ontologindexer.es
 
+import no.nav.arbeid.pam.ontologindexer.service.JanzzConcept
+import no.nav.arbeid.pam.ontologindexer.service.Skill
 import no.nav.arbeid.pam.ontologindexer.service.Stillingstittel
 import org.apache.commons.lang3.StringUtils
 import org.elasticsearch.action.bulk.BulkResponse
@@ -47,10 +49,9 @@ class IndexService(private val client: ElasticsearchIndexClient) {
     }
 
     @Throws(IOException::class)
-    fun indexJobTitles(prefix: String, datestamp: String, list: List<Stillingstittel>) {
-
+    fun indexJanzzConcept(prefix: String, datestamp: String, list: List<JanzzConcept>) {
         val index = prefix + datestamp
-        if (!list.isEmpty()) {
+        if (list.isNotEmpty()) {
             val bulkResponse = client.indexBulk(list, index)
             reportBulkResponse(bulkResponse, index)
         }

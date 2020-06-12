@@ -11,6 +11,9 @@ class EnvConf {
     @Value("\${pam.es.ontologi.stillingtittel.prefix}")
     val stillingtittelEsPrefix: String? = null
 
+    @Value("\${pam.es.ontologi.skill.prefix}")
+    val skillEsPrefix: String? = null
+
     @Value("\${pam.es.url}")
     val elasticsearchUrl: String? = null
 
@@ -22,6 +25,9 @@ class EnvConf {
 
     @Value("\${pam.synonymer.typeahead.stillingstitler.url}")
     val typeaheadStillingstittlerGwUrl: String? = null
+
+    @Value("\${pam.synonymer.typeahead.skills.url}")
+    val typeaheadSkillsGwUrl: String? = null
 
     fun gwHeaders(): HttpHeaders {
         // connect to servicegateway

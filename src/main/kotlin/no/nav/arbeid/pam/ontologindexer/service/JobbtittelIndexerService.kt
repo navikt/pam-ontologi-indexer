@@ -22,38 +22,41 @@ class JobbtittelIndexerService {
     @Autowired
     lateinit var envConf: EnvConf
 
-    fun indekser() {
+    fun indexJanzzConcepts() {
         LOGGER.info("Henter stillingstitler fra ontologien")
-        val stillingstitler = hentOntologiKlient.hentTitler()
-        LOGGER.info("Hentet ${stillingstitler.size} fra ontologien")
+        val occupationTitles = hentOntologiKlient.fetchOccupationTitles()
+        val skills = hentOntologiKlient.fetchSkills()
+        LOGGER.info("Hentet ${occupationTitles.size} stillingstitler og ${skills.size} kompetanser fra ontologien")
 
-        val prefix = envConf.stillingtittelEsPrefix ?: "xxx"
+        val occupationIndexPrefix = envConf.stillingtittelEsPrefix ?: "defaultOccupationIndex-"
+        val skillIndexPrefix = envConf.skillEsPrefix ?: "defaultSkillIndex-"
         val datestamp = Datestamp.current
 
-        opprettIndeks(prefix, datestamp)
+        opprettIndeks(occupationIndexPrefix, datestamp)
+        opprettIndeks(skillIndexPrefix, datestamp)
 
-
-        indekser(prefix, datestamp, stillingstitler)
+        index(occupationIndexPrefix, datestamp, occupationTitles)
+        index(skillIndexPrefix, datestamp, skills)
 
         LOGGER.info("!!! JOB FINISHED! Time to verify the results")
 
         Thread.sleep(2000)
-        verifiser(prefix, datestamp, stillingstitler)
-
+        verifyIndex(occupationIndexPrefix, datestamp, occupationTitles)
+        verifyIndex(skillIndexPrefix, datestamp, skills)
 
     }
 
-    private fun verifiser(prefix: String, datestamp: String, stillingstitler: List<Stillingstittel>) {
+    private fun verifyIndex(prefix: String, datestamp: String, concepts: List<JanzzConcept>) {
         try {
 
             val docCount = indexService.fetchDocCount(prefix, datestamp)
 
-            if (docCount >= stillingstitler.size) {
+            if (docCount >= concepts.size) {
                 LOGGER.info("Index doc count: {}", docCount)
                 LOGGER.info("Verifying the new index and replacing the alias.")
                 indexService.replaceAlias(prefix, datestamp)
             } else {
-                LOGGER.error("Write count {} is greater than index doc count {}. Skipping verification, aliasing and deleting the new index.", stillingstitler.size, docCount)
+                LOGGER.error("Write count {} is greater than index doc count {}. Skipping verification, aliasing and deleting the new index.", concepts.size, docCount)
                 indexService.deleteIndexWithDatestamp(prefix, datestamp)
             }
 
@@ -63,9 +66,9 @@ class JobbtittelIndexerService {
         }
     }
 
-    private fun indekser(prefix: String, datestamp: String, stillingstitler: List<Stillingstittel>) {
+    private fun index(prefix: String, datestamp: String, concepts: List<JanzzConcept>) {
         try {
-            indexService.indexJobTitles(prefix, datestamp, stillingstitler)
+            indexService.indexJanzzConcept(prefix, datestamp, concepts)
         } catch (e: Exception) {
             LOGGER.error("Failed to index indexJobTitles", e)
             throw e

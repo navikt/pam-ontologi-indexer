@@ -1,6 +1,8 @@
 package no.nav.arbeid.pam.ontologindexer.es
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.arbeid.pam.ontologindexer.service.JanzzConcept
+import no.nav.arbeid.pam.ontologindexer.service.Skill
 import no.nav.arbeid.pam.ontologindexer.service.Stillingstittel
 import org.apache.http.entity.ContentType
 import org.apache.http.nio.entity.NStringEntity
@@ -84,12 +86,12 @@ constructor(elasticClientBuilder: RestClientBuilder,
     }
 
     @Throws(IOException::class)
-    fun indexBulk(contents: List<Stillingstittel>, index: String): BulkResponse {
+    fun indexBulk(contents: List<JanzzConcept>, index: String): BulkResponse {
 
         return bulk(
                 BulkRequest().apply {
                     contents.forEach {
-                        this.add(IndexRequest(index.toLowerCase()).id("${it.konseptId.toString()}-${it.label}")
+                        this.add(IndexRequest(index.toLowerCase()).id("${it.konseptId}-${it.label}")
                                 .source(objectMapper.writeValueAsString(it)
                                         , XContentType.JSON))
                     }
