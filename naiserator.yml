@@ -1,0 +1,42 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: pam-ontologi-indexer
+  namespace: default
+  labels:
+    team: teampam
+spec:
+  image: {{ image }}
+  port: 9023
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 30
+  readiness:
+    path: /internal/isReady
+    initialDelay: 30
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  vault:
+    enabled: true
+  webproxy: false
+  prometheus:
+    enabled: true
+    path: /internal/actuator/prometheus
+  ingresses:
+  {{#each ingress as |url|}}
+     - {{url}}
+  {{/each}}
+  env:
+    - name: PAM_SYNONYMER_TYPEAHEAD_URL
+      value: {{ pam_synonymer_typeahead_url }}
+    - name: PAM_ES_URL
+      value: {{ pam_es_url }}
