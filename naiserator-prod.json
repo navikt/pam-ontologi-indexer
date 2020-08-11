@@ -1,0 +1,5 @@
+{
+    "ingress": ["https://pam-ontologi-indexer.nais.oera.no"],
+    "pam_synonymer_typeahead_url": "https://api-gw.oera.no/pam-ontologi-synonymer/rest/typeahead",
+    "pam_es_url": "https://tpa-stilling-opendistro-elasticsearch.nais.oera.no"
+}
